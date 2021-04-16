@@ -1,6 +1,10 @@
 [graphics]
 width = 900
 height = 500
-FPS = 60
+margin = 60
+FPS = 90
+
+[path]
+player ='./img/464-4641838_kurzgesagt-kurzgesagt-dead-bird-hd-png-download.png'
 
 
