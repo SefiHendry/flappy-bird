@@ -12,10 +12,12 @@ import src.entities.Player as p
 import src.entities.Obstacle as o
 
 fpsClock = pygame.time.Clock()
+
+
 # def draw()
 
 
-def gameloop(screen: Union[pygame.Surface, SurfaceType]):
+def gameloop(screen: Union[pygame.Surface, SurfaceType], score):
     font = pygame.font.Font(os.path.join("fonts", "GOUDYSTO.TTF"), 32)
     running = True
     player = p.Player(x=200, y=200, size=30, color=(255, 51, 51))
@@ -27,7 +29,7 @@ def gameloop(screen: Union[pygame.Surface, SurfaceType]):
 
         text = font.render("Your Score: " + str(player.score), True, (255, 0, 0))
         text_rect = text.get_rect()
-        text_rect.center = (CONFIG["graphics"]["width"] - 270 , 30)
+        text_rect.center = (CONFIG["graphics"]["width"] - 270, 30)
         keys = pygame.key.get_pressed()
         player.move(keys)
         screen.fill((128, 255, 255))
@@ -37,10 +39,11 @@ def gameloop(screen: Union[pygame.Surface, SurfaceType]):
         obstacle1.move(difficult)
         running = not player.collision(obstacle1)
 
-        if obstacle1.up_x <= 0:
+        if obstacle1.up_x <= -30:
             obstacle1 = o.Obstacle()
             difficult *= 1.05
             player.score += 1
+            score = player.score
             # player.size *= 1.1
         fpsClock.tick((CONFIG["graphics"]["FPS"]))
         pygame.display.flip()
@@ -48,12 +51,14 @@ def gameloop(screen: Union[pygame.Surface, SurfaceType]):
         for event in pygame.event.get():
             if event.type is pygame.QUIT:
                 running = False
+    print("your score is: ", score)
 
 
 def main():
+    score = 0
     pygame.init()
     screen = pygame.display.set_mode((CONFIG["graphics"]["width"], CONFIG["graphics"]["height"]))
-    gameloop(screen)
+    gameloop(screen, score)
 
     pygame.quit()
 

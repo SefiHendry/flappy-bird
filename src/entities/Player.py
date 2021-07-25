@@ -15,12 +15,16 @@ class Player:
         self.velocity_x = 0
         self.velocity_y = 0
         self.score = 0
-        # self.image = pygame.image.load(CONFIG["path"]["player"])
+        self.bird_image = pygame.image.load(CONFIG["path"]["player"])
+        self.bird_image_jump = pygame.image.load(CONFIG["path"]["player_jump"])
 
     def draw(self, screen):
         pass
-        # screen.blit(self.image,(self.x, self.y))
-        pygame.draw.circle(screen, self.color, (self.x, self.y), self.size)
+        if self.velocity_y >= 0:
+            screen.blit(self.bird_image, (self.x, self.y))
+        else:
+            screen.blit(self.bird_image_jump, (self.x, self.y))
+        # pygame.draw.circle(screen, self.color, (self.x + 45, self.y + 35), self.size)
 
     def move(self, keys):
         #     if keys[pygame.K_UP]:
@@ -60,9 +64,11 @@ class Player:
 
     def collision(self, obstacle1):
         if ((self.y <= obstacle1.up_y_finish)
-                and (self.x <= obstacle1.up_x + obstacle1.size / 1.5 and self.x >= obstacle1.up_x - obstacle1.size / 1.5)
+                and (
+                        self.x <= obstacle1.up_x + obstacle1.size / 1.5 and self.x >= obstacle1.up_x - obstacle1.size / 1.5)
                 or (self.y >= obstacle1.up_y_finish + obstacle1.margin)
-                and (self.x <= obstacle1.up_x + obstacle1.size / 1.5 and self.x >= obstacle1.up_x - obstacle1.size / 1.5)):
+                and (
+                        self.x <= obstacle1.up_x + obstacle1.size / 1.5 and self.x >= obstacle1.up_x - obstacle1.size / 1.5)):
             self.score = 0
             return True
         return False

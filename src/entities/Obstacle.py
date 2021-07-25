@@ -11,7 +11,7 @@ class Obstacle:
         self.up_y_start = 0
         self.up_y_finish = (CONFIG["graphics"]["height"]) / (random.randrange(2, 8, 1))
         self.down_y_start = 0
-        self.margin = 150
+        self.margin = 200
         self.size = 70
         self.color = (100, 150, 200)
         self.velocity_x = 0.5
